@@ -1,9 +1,7 @@
-import matplotlib
-import matplotlib.pyplot as plt
 import numpy as np
-from keras.utils import to_categorical
 from keras import models
 from keras import layers
+from draw import draw_graphics
 
 def vectorize(sequences, dimension=10000):
     results = np.zeros((len(sequences), dimension))
@@ -33,4 +31,8 @@ model.add(layers.Dense(50, activation = "relu"))
 model.add(layers.Dense(1, activation = "sigmoid"))
 model.compile( optimizer = "adam", loss = "binary_crossentropy", metrics = ["accuracy"])
 
-history = model.fit( train_x, train_y, epochs= 2, batch_size = 500, validation_data = (test_x, test_y))
+H = model.fit( train_x, train_y, epochs= 15, batch_size = 500, validation_data = (test_x, test_y))
+
+draw_graphics(H)
+
+print(np.mean(H.history["val_accuracy"]))
